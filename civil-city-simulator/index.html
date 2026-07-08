@@ -49,14 +49,13 @@
       </div>
     </aside>
 
-    <!-- 中央: 都市マップ -->
+    <!-- 中央: 3D都市マップ (Three.js) -->
     <main id="map-area">
       <div id="map-container">
-        <div id="game-map">
-          <!-- JavaScriptで動的生成 -->
-        </div>
-        <div class="map-coords">(-, -)</div>
+        <!-- WebGLキャンバスがここに挿入される -->
       </div>
+      <div class="map-coords">(-, -)</div>
+      <div class="map-hint">🖱️ ドラッグ: 視点回転 / ホイール: ズーム / クリック: 建設</div>
     </main>
 
     <!-- 右パネル: 都市診断・KPI・AIアドバイス -->
@@ -91,6 +90,14 @@
 
   </div>
 
+  <!-- Three.js のモジュール解決(同梱版を使用・CDN非依存) -->
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "./js/lib/three.module.js"
+      }
+    }
+  </script>
   <script type="module" src="js/main.js"></script>
 </body>
 </html>

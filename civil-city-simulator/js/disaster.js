@@ -207,32 +207,34 @@ class Disaster {
     return this.hazardMode;
   }
 
-  // ハザードマップのオーバーレイ描画
+  // ハザードマップのオーバーレイ描画(3Dレンダラーに委譲)
   renderHazardOverlay() {
+    const renderer = this.map.renderer;
+    if (!renderer) return;
+
+    if (!this.hazardMode) {
+      renderer.clearHazard();
+      return;
+    }
+
+    // 対象セルを収集してレンダラーへ渡す
+    const cells = [];
     for (let y = 0; y < this.map.size; y++) {
       for (let x = 0; x < this.map.size; x++) {
-        const cellEl = document.querySelector(`.cell[data-x="${x}"][data-y="${y}"]`);
-        if (!cellEl) continue;
+        const cell = this.map.grid[y][x];
+        if (cell.type === BuildingTypes.WATER) continue;
 
-        if (this.hazardMode) {
-          const cell = this.map.grid[y][x];
-          if (cell.type === BuildingTypes.WATER) continue;
-
-          // 浸水想定区域（川から2セル以内・堤防なし）
-          if (this.isNearWater(x, y, 2) && !this.hasNearby(x, y, BuildingTypes.LEVEE, 2)) {
-            cellEl.style.boxShadow = 'inset 0 0 0 100px rgba(41, 182, 246, 0.45)';
-          }
-          // 土砂災害警戒区域（上端2行）
-          else if (y < 2) {
-            cellEl.style.boxShadow = 'inset 0 0 0 100px rgba(255, 193, 7, 0.45)';
-          } else {
-            cellEl.style.boxShadow = '';
-          }
-        } else {
-          cellEl.style.boxShadow = '';
+        // 浸水想定区域（川から2セル以内・堤防なし）
+        if (this.isNearWater(x, y, 2) && !this.hasNearby(x, y, BuildingTypes.LEVEE, 2)) {
+          cells.push({ x, y, color: 'flood' });
+        }
+        // 土砂災害警戒区域（上端2行）
+        else if (y < 2) {
+          cells.push({ x, y, color: 'landslide' });
         }
       }
     }
+    renderer.setHazardCells(cells);
   }
 
   // ユーティリティ：水域が半径内にあるか

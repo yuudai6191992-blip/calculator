@@ -15,6 +15,7 @@ AI都市診断の提言を参考にしながら、人口・税収・幸福度・
 15のKPIで評価される都市を育てます。
 
 ### 主な機能
+- 🏙️ **Three.jsによるリアル3D都市表示**（太陽光・影・窓明かり・自動車・山並み）
 - 🗺️ 20×20グリッドの都市マップ（河川自動生成）
 - 🏗️ 15種類の建物・インフラ（住宅〜調整池・防災公園まで）
 - 🚗 交通シミュレーション（渋滞・道路網評価・公共交通）
@@ -53,6 +54,9 @@ npx serve .
 ### 操作
 | 操作 | 内容 |
 |------|------|
+| マップをドラッグ | 視点の回転 |
+| マウスホイール / ピンチ | ズーム |
+| 右ドラッグ | 平行移動（パン） |
 | 建物アイコンをクリック → マップをクリック | 建設 |
 | 🚧撤去 → 建物をクリック | 撤去（¥10M） |
 | ⏭ 次のターン | 手動でターン進行 |
@@ -86,6 +90,8 @@ civil-city-simulator/
 │   └── style.css       # ダッシュボード風UIスタイル
 ├── js/
 │   ├── main.js         # ゲームループ・統括制御
+│   ├── renderer3d.js   # Three.js 3D都市レンダラー
+│   ├── lib/            # 同梱ライブラリ (three.module.js ほか)
 │   ├── map.js          # グリッドマップ管理
 │   ├── simulation.js   # 人口・幸福度・KPI計算
 │   ├── ui.js           # UI描画・イベントログ
@@ -108,9 +114,10 @@ civil-city-simulator/
 ## 🛠️ 技術スタック
 
 - HTML5 / CSS3 / JavaScript (ES6 Modules)
-- 外部ライブラリ不使用（Vanilla JS）
+- **Three.js**（リポジトリに同梱・CDN非依存）による3D都市レンダリング
+- ゲームロジックはVanilla JS（フレームワーク非依存）
 - 将来拡張を考慮した設計: OpenStreetMap / PLATEAU / 国土数値情報 /
-  Three.js / MapLibre / Supabase / Node.js（[docs/architecture.md](docs/architecture.md) 参照）
+  MapLibre / Supabase / Node.js（[docs/architecture.md](docs/architecture.md) 参照）
 
 ## 📄 ライセンス
 

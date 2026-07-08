@@ -22,10 +22,15 @@ class Infrastructure {
     for (let y = 0; y < size; y++) {
       // 蛇行（-1, 0, +1のランダムシフト）
       const shift = Math.floor(Math.random() * 3) - 1;
-      riverX = Math.max(2, Math.min(size - 3, riverX + shift));
+      const newX = Math.max(2, Math.min(size - 3, riverX + shift));
+      // 蛇行した場合は移動元も水にして川筋を連続させる（斜め分断を防ぐ）
+      if (newX !== riverX) {
+        this.map.grid[y][riverX].type = BuildingTypes.WATER;
+      }
+      riverX = newX;
       this.map.grid[y][riverX].type = BuildingTypes.WATER;
-      // 川幅を2セルにする箇所
-      if (y % 3 === 0 && riverX + 1 < size) {
+      // 川幅を2セルにして自然な広がりを持たせる
+      if (riverX + 1 < size) {
         this.map.grid[y][riverX + 1].type = BuildingTypes.WATER;
       }
     }

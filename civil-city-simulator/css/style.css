@@ -277,114 +277,22 @@ body {
   line-height: 1.6;
 }
 
-/* --- Map Area --- */
+/* --- Map Area (3D WebGL) --- */
 #map-area {
   grid-area: map;
   background: var(--bg-dark);
-  display: flex;
-  align-items: safe center;
-  justify-content: safe center;
-  overflow: auto;
+  overflow: hidden;
   position: relative;
-  padding: 16px;
 }
 
 #map-container {
-  position: relative;
+  position: absolute;
+  inset: 0;
 }
 
-#game-map {
-  display: grid;
-  gap: 1px;
-  background: rgba(45, 64, 88, 0.3);
-  border-radius: var(--radius);
-  overflow: hidden;
-  box-shadow: 0 8px 32px var(--shadow);
-}
-
-.cell {
-  width: 36px;
-  height: 36px;
-  background: #1e3a2f;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+#map-container canvas {
+  display: block;
   cursor: pointer;
-  transition: all 0.1s ease;
-  font-size: 18px;
-  position: relative;
-  user-select: none;
-}
-.cell:hover {
-  outline: 2px solid var(--primary-light);
-  outline-offset: -2px;
-  z-index: 1;
-}
-
-/* Cell types */
-.cell.empty {
-  background: #1e3a2f;
-}
-.cell.residential {
-  background: #1b5e20;
-}
-.cell.commercial {
-  background: #0d47a1;
-}
-.cell.road {
-  background: #37474f;
-}
-.cell.park {
-  background: #2e7d32;
-}
-.cell.industrial {
-  background: #4a148c;
-}
-.cell.public-facility {
-  background: #b71c1c;
-}
-.cell.water {
-  background: #01579b;
-}
-.cell.bridge {
-  background: #455a64;
-}
-.cell.station {
-  background: #e65100;
-}
-.cell.bus-stop {
-  background: #f57f17;
-}
-.cell.hospital {
-  background: #880e4f;
-}
-.cell.school {
-  background: #4a148c;
-}
-.cell.fire-station {
-  background: #bf360c;
-}
-.cell.levee {
-  background: #5d4037;
-}
-.cell.retention-basin {
-  background: #006064;
-}
-.cell.shelter {
-  background: #1a237e;
-}
-.cell.disaster-park {
-  background: #33691e;
-}
-
-/* Cell animation */
-.cell.just-built {
-  animation: cellPop 0.3s ease;
-}
-@keyframes cellPop {
-  0% { transform: scale(0.8); opacity: 0.5; }
-  50% { transform: scale(1.1); }
-  100% { transform: scale(1); opacity: 1; }
 }
 
 /* Map overlay for coordinates */
@@ -398,6 +306,20 @@ body {
   font-size: 11px;
   color: var(--text-muted);
   font-family: var(--font-mono);
+  pointer-events: none;
+}
+
+/* 操作ヒント */
+.map-hint {
+  position: absolute;
+  bottom: 8px;
+  left: 8px;
+  background: rgba(15, 25, 35, 0.8);
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 11px;
+  color: var(--text-secondary);
+  pointer-events: none;
 }
 
 /* --- Right Panel --- */
@@ -701,11 +623,6 @@ body {
   #app {
     grid-template-columns: 220px 1fr 260px;
   }
-  .cell {
-    width: 30px;
-    height: 30px;
-    font-size: 15px;
-  }
 }
 
 @media (max-width: 900px) {
@@ -726,6 +643,9 @@ body {
   }
   .build-grid {
     grid-template-columns: repeat(4, 1fr);
+  }
+  #map-area {
+    min-height: 340px;
   }
   #panel {
     border-left: none;

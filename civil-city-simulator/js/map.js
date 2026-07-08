@@ -28,46 +28,23 @@ class GameMap {
     );
   }
 
-  // マップのDOM描画
-  render(container) {
-    const mapEl = document.getElementById('game-map');
-    mapEl.innerHTML = '';
-    mapEl.style.gridTemplateColumns = `repeat(${this.size}, 36px)`;
-    mapEl.style.gridTemplateRows = `repeat(${this.size}, 36px)`;
-
-    for (let y = 0; y < this.size; y++) {
-      for (let x = 0; x < this.size; x++) {
-        const cell = this.grid[y][x];
-        const cellEl = document.createElement('div');
-        cellEl.className = `cell ${cell.type}`;
-        cellEl.dataset.x = x;
-        cellEl.dataset.y = y;
-
-        if (cell.type !== BuildingTypes.EMPTY) {
-          const data = BuildingData[cell.type];
-          if (data) {
-            cellEl.textContent = data.icon;
-          }
-        }
-
-        cellEl.addEventListener('click', () => this.handleCellClick(x, y));
-        cellEl.addEventListener('mouseenter', () => this.handleCellHover(x, y, cellEl));
-        cellEl.addEventListener('mouseleave', () => this.handleCellLeave());
-
-        mapEl.appendChild(cellEl);
-      }
+  // マップの描画(3Dレンダラーに委譲)
+  // this.renderer は main.js で Renderer3D が代入される
+  render() {
+    if (this.renderer) {
+      this.renderer.buildScene();
     }
   }
 
-  // セルクリック処理
+  // セルクリック処理(レンダラーから呼ばれる)
   handleCellClick(x, y) {
     if (this.onCellClick) {
       this.onCellClick(x, y, this.selectedTool);
     }
   }
 
-  // セルホバー処理
-  handleCellHover(x, y, element) {
+  // セルホバー処理(レンダラーから呼ばれる)
+  handleCellHover(x, y) {
     this.hoveredCell = { x, y };
     const cell = this.grid[y][x];
     const coordsEl = document.querySelector('.map-coords');
@@ -81,11 +58,6 @@ class GameMap {
       }
       coordsEl.textContent = info;
     }
-  }
-
-  // セルホバー解除
-  handleCellLeave() {
-    this.hoveredCell = null;
   }
 
   // セルに建物を配置
@@ -112,21 +84,10 @@ class GameMap {
     return true;
   }
 
-  // 個別セルのDOM更新
+  // 個別セルの3D表示更新
   updateCell(x, y) {
-    const cell = this.grid[y][x];
-    const cellEl = document.querySelector(`.cell[data-x="${x}"][data-y="${y}"]`);
-    if (!cellEl) return;
-
-    cellEl.className = `cell ${cell.type}`;
-
-    if (cell.type !== BuildingTypes.EMPTY) {
-      const data = BuildingData[cell.type];
-      cellEl.textContent = data ? data.icon : '';
-      cellEl.classList.add('just-built');
-      setTimeout(() => cellEl.classList.remove('just-built'), 300);
-    } else {
-      cellEl.textContent = '';
+    if (this.renderer) {
+      this.renderer.updateCell(x, y);
     }
   }
 

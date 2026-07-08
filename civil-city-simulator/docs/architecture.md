@@ -39,7 +39,13 @@ Vanilla JavaScript（ES6 Modules）によるモジュール分割アーキテク
 | `disaster.js` | 災害リスク計算・災害発生・ハザードマップ |
 | `ai.js` | KPI/マップ分析による都市診断・提言生成 |
 | `ui.js` | 建設メニュー・KPIパネル・ログ・モーダルのDOM操作 |
+| `renderer3d.js` | Three.jsによる3D都市描画（建物のプロシージャル生成・道路自動タイル・レイキャスト操作・ハザードオーバーレイ） |
 | `main.js` | 初期化・モジュール間の配線・ゲームループ |
+
+### 3D描画の分離
+`map.js` の `render()/updateCell()` は `map.renderer`(Renderer3D) へ委譲する薄いラッパで、
+ゲームロジックは描画方式を知らない。2Dレンダラーや MapLibre タイル表示へ差し替える場合も
+同じインターフェース(`buildScene`/`updateCell`/`setHazardCells`)を実装すればよい。
 
 ## 3. データフロー
 

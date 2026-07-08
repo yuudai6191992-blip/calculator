@@ -12,6 +12,7 @@ import { Infrastructure } from './infrastructure.js';
 import { Disaster } from './disaster.js';
 import { CityAI } from './ai.js';
 import { UI } from './ui.js';
+import { Renderer3D } from './renderer3d.js';
 
 // 使用可能な建物一覧（全Phase解放済み）
 const AvailableBuildings = [
@@ -59,6 +60,13 @@ class Game {
   init() {
     // 河川の生成
     this.infrastructure.generateRiver();
+
+    // 3Dレンダラーの初期化(map.renderer に接続)
+    const container = document.getElementById('map-container');
+    this.renderer3d = new Renderer3D(this.map, container);
+    this.map.renderer = this.renderer3d;
+    this.renderer3d.onCellClick = (x, y) => this.map.handleCellClick(x, y);
+    this.renderer3d.onCellHover = (x, y) => this.map.handleCellHover(x, y);
 
     // マップ描画
     this.map.render();
@@ -121,6 +129,8 @@ class Game {
   // 建設・撤去処理
   handleBuild(x, y, tool) {
     if (!this.selectedTool) return;
+    // 範囲外は無視
+    if (x < 0 || x >= this.map.size || y < 0 || y >= this.map.size) return;
 
     const cell = this.map.grid[y][x];
 
