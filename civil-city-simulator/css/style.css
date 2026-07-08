@@ -282,10 +282,11 @@ body {
   grid-area: map;
   background: var(--bg-dark);
   display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
+  align-items: safe center;
+  justify-content: safe center;
+  overflow: auto;
   position: relative;
+  padding: 16px;
 }
 
 #map-container {
