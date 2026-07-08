@@ -1,0 +1,19 @@
+{
+  "name": "サンプルシティ",
+  "description": "小規模な河川沿いの都市。住宅地と商業地が道路で接続された基本構成。",
+  "version": "1.0",
+  "mapSize": 20,
+  "initialBudget": 5000,
+  "buildings": [
+    { "x": 5, "y": 5, "type": "road" },
+    { "x": 6, "y": 5, "type": "road" },
+    { "x": 7, "y": 5, "type": "road" },
+    { "x": 8, "y": 5, "type": "road" },
+    { "x": 5, "y": 6, "type": "residential" },
+    { "x": 6, "y": 6, "type": "residential" },
+    { "x": 7, "y": 6, "type": "residential" },
+    { "x": 8, "y": 6, "type": "commercial" },
+    { "x": 5, "y": 4, "type": "park" },
+    { "x": 8, "y": 4, "type": "commercial" }
+  ]
+}

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Civil City Simulator - 建設コンサル型都市シミュレーション</title>
+  <meta name="description" content="建設コンサルタントとして都市計画・インフラ整備・防災を学べる街づくりシミュレーションゲーム">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div id="app">
+
+    <!-- ヘッダー -->
+    <header id="header">
+      <div class="header-left">
+        <span class="header-logo">🏙️ Civil City Simulator</span>
+      </div>
+      <div class="header-center">
+        <div class="header-stat">
+          <span>📅 ターン</span>
+          <span class="value" id="stat-turn">0</span>
+        </div>
+        <div class="header-stat">
+          <span>💰 予算</span>
+          <span class="value" id="stat-budget">¥5,000M</span>
+        </div>
+        <div class="header-stat">
+          <span>👥 人口</span>
+          <span class="value" id="stat-population">0</span>
+        </div>
+      </div>
+      <div class="header-right">
+        <div class="speed-control">
+          <button class="speed-btn active" data-speed="pause">⏸</button>
+          <button class="speed-btn" data-speed="1x">▶</button>
+          <button class="speed-btn" data-speed="2x">▶▶</button>
+        </div>
+        <button class="btn btn-primary" id="btn-next-turn">⏭ 次のターン</button>
+        <button class="btn btn-icon" id="btn-hazard" title="ハザードマップ表示">🗺️</button>
+        <button class="btn btn-icon" id="btn-policy" title="都市経営政策">🏛️</button>
+      </div>
+    </header>
+
+    <!-- 左サイドバー: 建設メニュー -->
+    <aside id="sidebar">
+      <div id="build-menu">
+        <!-- JavaScriptで動的生成 -->
+      </div>
+    </aside>
+
+    <!-- 中央: 都市マップ -->
+    <main id="map-area">
+      <div id="map-container">
+        <div id="game-map">
+          <!-- JavaScriptで動的生成 -->
+        </div>
+        <div class="map-coords">(-, -)</div>
+      </div>
+    </main>
+
+    <!-- 右パネル: 都市診断・KPI・AIアドバイス -->
+    <aside id="panel">
+      <div class="panel-section">
+        <div class="panel-title">🤖 AI都市診断</div>
+        <div class="ai-advice">
+          <div class="ai-advice-header">
+            <span>💡</span>
+            <span>コンサルタントAIの提言</span>
+          </div>
+          <div id="ai-advice-content">
+            <div class="ai-advice-text">都市データを分析中です...</div>
+          </div>
+        </div>
+      </div>
+      <div class="panel-section">
+        <div class="panel-title">📊 都市KPI</div>
+        <div class="kpi-grid" id="kpi-grid">
+          <!-- JavaScriptで動的生成 -->
+        </div>
+      </div>
+    </aside>
+
+    <!-- 下部: イベントログ -->
+    <footer id="event-log">
+      <div class="log-title">📋 イベントログ</div>
+      <div class="log-entries" id="log-entries">
+        <!-- JavaScriptで動的生成 -->
+      </div>
+    </footer>
+
+  </div>
+
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>
