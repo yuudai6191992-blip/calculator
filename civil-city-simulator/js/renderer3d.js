@@ -831,7 +831,6 @@ class Renderer3D {
       new THREE.MeshStandardMaterial({ map: makeRoadTexture(mask), roughness: 0.92 })
     );
     plane.rotation.x = -Math.PI / 2;
-    if (mask === 10) plane.rotation.z = Math.PI / 2;
     plane.position.y = 0.012;
     plane.receiveShadow = true;
     g.add(plane);
@@ -1345,7 +1344,6 @@ class Renderer3D {
       new THREE.MeshStandardMaterial({ map: makeRoadTexture(10), roughness: 0.92 })
     );
     surf.rotation.x = -Math.PI / 2;
-    surf.rotation.z = Math.PI / 2;
     surf.position.y = 0.17;
     g.add(surf);
     // 欄干(支柱つき)
